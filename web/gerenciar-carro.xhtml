@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+             template="template.xhtml"
+             xmlns:sc="http://xmlns.jcp.org/jsf/composite/sccomp">
+
+    <title>Objetos</title>
+
+    <h:form>
+        <p:fieldset legend="Gerenciar Carros" style="font-family: monospace;font-size: 100%;  ">
+            <!--Essa e a parte de cima
+            PanelGrid forma um "Layout"-->
+            <p:panelGrid columns="2" rendered="#{carroBean.busca==false}">                    
+                <h:outputLabel  value="Modelo" style="font-family: monospace; font-size: 100%;"></h:outputLabel>
+
+                <p:inputText value="#{carroBean.entidade.modelo}" style="font-family: monospace;font-size: 120%;" />
+                
+
+                
+
+                <h:outputLabel value="Fabricante" style="font-family: monospace; font-size: 100%;"></h:outputLabel>
+
+                <p:inputText value="#{carroBean.entidade.fabricante}" style="font-family: monospace;font-size: 120%;"/>
+
+
+
+                <h:outputLabel  value="Cor" style="font-family: monospace; font-size: 100%;"></h:outputLabel>
+
+                <p:inputText value="#{carroBean.entidade.cor}" style="font-family: monospace;font-size: 120%;"/>
+
+
+
+                <h:outputLabel  value="Ano" style="font-family: monospace; font-size: 100%;"></h:outputLabel>
+
+                <p:inputMask mask="9999" value="#{carroBean.entidade.ano}" style="font-family: monospace;font-size: 120%;"></p:inputMask>
+
+
+            </p:panelGrid>
+            <!--Toolbar e parte do fundo ficar como ficou a tela toda praticamente -->
+            <!--Implementando componentes -->
+            <sc:toolbarCRUD crudBean="#{carroBean}">
+                <p:inputText></p:inputText>
+            </sc:toolbarCRUD>
+
+            <p:messages autoUpdate="true" showDetail="true"></p:messages>
+            <!-- Criando as tabelas --> 
+            <p:dataTable value="#{carroBean.entidades}" var="carro"  resizableColumns="true"
+                         style="font-family: monospace;font-size: 100%;" rendered="#{carroBean.busca == true}">   
+                <!-- sortby para ordenar -->
+                <p:column headerText="Editar" >
+                    <p:commandButton value="Editar" action="#{carroBean.editar(carro)}" update="@form"
+                                     style="font-family: monospace;font-size: 120%;"></p:commandButton>
+                    <p:commandButton value="Deletar" action="#{carroBean.deletar(carro)}" update="@form"
+                                     style="font-family: monospace;font-size: 120%;"></p:commandButton>
+
+                </p:column>
+                <p:column headerText="Modelo"  sortBy="#{carro.modelo}">                        
+                    <h:outputText value="#{carro.modelo}"></h:outputText>
+                </p:column>
+
+                <p:column headerText="Fabricante" sortBy="#{carro.fabricante}">
+                    <h:outputText value="#{carro.fabricante}"></h:outputText>
+                </p:column>
+
+                <p:column headerText="Cor" sortBy="#{carro.cor}"  >
+                    <h:outputText value="#{carro.cor}"></h:outputText>
+                </p:column>
+
+                <p:column headerText="Ano" sortBy="#{carro.ano}">
+                    <h:outputText value="#{carro.ano}"></h:outputText>
+                </p:column>
+
+            </p:dataTable>
+        </p:fieldset>
+
+    </h:form>
+</ui:decorate>
+

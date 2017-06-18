@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+             template="template.xhtml" 
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:sc="http://xmlns.jcp.org/jsf/composite/sccomp">
+
+    <h:form>
+
+        <p:fieldset legend="Gerenciar Usuario" style="font-family: monospace;font-size: 100%;">
+            <!--Implementando componentes -->
+
+            <p:panelGrid columns="2" rendered="#{usuarioBEAN.busca==false}">
+                <h:outputLabel value="Login" style="font-family: monospace; font-size: 100%;"></h:outputLabel>
+                <p:inputText value="#{usuarioBEAN.entidade.login}" style="font-family: monospace; font-size: 100%;"></p:inputText>
+                <h:outputLabel value="Senha" style="font-family: monospace; font-size: 100%;" ></h:outputLabel>
+                <p:password value="#{usuarioBEAN.entidade.senha}" style="font-family: monospace; font-size: 100%;"></p:password>
+            </p:panelGrid>
+
+            <sc:toolbarCRUD crudBean="#{usuarioBEAN}">
+                <p:inputText></p:inputText>
+            </sc:toolbarCRUD>
+            <p:messages autoUpdate="true" showDetail="true"></p:messages>
+
+            <p:dataTable value="#{usuarioBEAN.entidades}" var="u" rendered="#{usuarioBEAN.busca==true}">
+                <p:column>
+                    <p:commandButton value="Editar" action="#{usuarioBEAN.editar(u)}" update="@form"
+                                     style="font-family: monospace;font-size: 120%;"></p:commandButton>
+                    <p:commandButton value="Deletar" action="#{usuarioBEAN.deletar(u)}" update="@form"
+                                     style="font-family: monospace;font-size: 120%;"></p:commandButton>
+                </p:column>
+                <p:column headerText="Login" style="font-family: monospace; font-size: 100%;">
+                    #{u.login}
+                </p:column>
+                <p:column headerText="Senha" style="font-family: monospace; font-size: 100%;">
+                    #{u.senha}
+                </p:column>
+
+            </p:dataTable>
+        </p:fieldset>
+    </h:form>
+
+
+
+</ui:decorate>
+
